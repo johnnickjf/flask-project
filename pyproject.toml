@@ -4,6 +4,9 @@ version = "0.1.0"
 description = "Servidor criado com flask para estudos py."
 authors = ["Johnnick F. Landim <johnnick.landim@gmail.com>"]
 readme = "README.md"
+packages = [
+    { include = "src" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
