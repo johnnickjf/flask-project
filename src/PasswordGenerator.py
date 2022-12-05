@@ -5,12 +5,12 @@ NUM = '0123456789'
 ESP = '[]{}()*#;/,-_%'
 
 
-def password_generator(length, number, especial):
-    password = ''
+def password_generator(data):
+    password = {'password': ''}
     aux = CHAR
-    if especial:
+    if int(data['especial']):
         aux += ESP
-    if number:
+    if int(data['number']):
         aux += NUM
-    password = ''.join(random.sample(aux, length))
+    password['password'] = ''.join(random.sample(aux, int(data['length'])))
     return password

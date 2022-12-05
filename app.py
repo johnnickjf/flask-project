@@ -12,10 +12,7 @@ def index_page():
 
 @app.route('/api/password', methods=['GET'])
 def password_gen():
-    length = request.args.get('length')
-    number = request.args.get('number')
-    especial = request.args.get('especial')
-    return password_generator(int(length), int(number), int(especial))
+    return password_generator(request.args)
 
 
 @app.route('/login', methods=['GET'])
