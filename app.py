@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 from src.LoginController import LoginController
+from src.PasswordGenerator import password_generator
 
 app = Flask(__name__)
 
@@ -7,6 +8,14 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index_page():
     return render_template('index.html')
+
+
+@app.route('/api/password', methods=['GET'])
+def password_gen():
+    length = request.args.get('length')
+    number = request.args.get('number')
+    especial = request.args.get('especial')
+    return password_generator(int(length), int(number), int(especial))
 
 
 @app.route('/login', methods=['GET'])
