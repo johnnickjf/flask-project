@@ -1,4 +1,3 @@
-from http.client import HTTPSConnection
 from base64 import b64encode
 
 
