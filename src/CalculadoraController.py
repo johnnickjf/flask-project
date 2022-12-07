@@ -1,6 +1,0 @@
-class CalculadoraController:
-    def __init__(self):
-        ...
-
-    def start(self):
-        ...
