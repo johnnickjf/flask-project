@@ -1,16 +1,20 @@
 import random
 
-CHAR = 'aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ'
-NUM = '0123456789'
-ESP = '[]{}()*#;/,-_%'
 
+class PasswordGenerator:
+    def __init__(self, data):
+        self.__str = 'aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ'
+        self.__num = '0123456789'
+        self.__esp = '[]{}()*#;/,-_%'
+        self.__data = data
 
-def password_generator(data):
-    password = {'password': ''}
-    aux = CHAR
-    if int(data['especial']):
-        aux += ESP
-    if int(data['number']):
-        aux += NUM
-    password['password'] = ''.join(random.sample(aux, int(data['length'])))
-    return password
+    def create_str(self):
+        if self.__data.get('number'):
+            self.__num += self.__num
+        if self.__data.get('especial'):
+            self.__esp += self.__esp
+
+    def password_generator(self):
+        self.create_str()
+        password = {'password': ''.join(random.sample(self.__str, int(self.__data['length'])))}
+        return password

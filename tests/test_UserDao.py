@@ -1,5 +1,5 @@
 from src.models.UserModel import User
-from src.dao.UserDao import UserDao
+from src.dao.ConnectionFactory import ConnectionFactory
 
 
 def test_insert_user():
@@ -7,8 +7,11 @@ def test_insert_user():
     print(user)
     assert user.get_name() == 'test'
 
-def test_insert_user():
-    user = User('test', 'abelha', 'pass')
-    dao = UserDao()
-    dao.insert_user(user)
+
+def test_insert():
+    user = User('test', 'alpha', 'pass')
+    connection = ConnectionFactory()
+    query = "INSERT INTO user (`name`, email, password) VALUES (%s, %s, %s)"
+    values = (user.get_name(), user.get_email(), user.get_password())
+    connection.insert(query, values)
     assert user.get_name() == 'test'

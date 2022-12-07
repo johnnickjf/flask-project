@@ -1,11 +1,12 @@
 from flask import Blueprint, render_template, request
+from src.dao.UserDao import UserDao
 
 bp = Blueprint('register', __name__, url_prefix='/register')
 
 
-@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/', methods=['POST'])
 def register():
-    return "register"
+
 
 
 def configure(app):

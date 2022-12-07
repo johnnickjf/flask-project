@@ -1,13 +1,17 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, request, jsonify
 from src.Controllers.PasswordGenerator import PasswordGenerator
 
 bp = Blueprint('password', __name__, url_prefix='/api/password')
 
 
-@bp.route('/', methods=['GET', 'POST'])
-def register():
-    password = PasswordGenerator(request.args)
-    return jsonify(password.password_generator())
+@bp.route('/', methods=['POST', 'GET'])
+def generate():
+    if request.method == 'POST':
+        password = PasswordGenerator(request.form)
+        return jsonify(password.password_generator())
+    else:
+        password = PasswordGenerator(request.args)
+        return jsonify(password.password_generator())
 
 
 def configure(app):
