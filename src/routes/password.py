@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from src.Controllers.PasswordGenerator import PasswordGenerator
+from src.controllers.PasswordGenerator import PasswordGenerator
 
 bp = Blueprint('password', __name__, url_prefix='/api/password')
 

@@ -1,13 +1,10 @@
 from flask import Flask
-from dotenv import load_dotenv, find_dotenv
-from routes import login, register, homepage, password
+from src.routes import auth, homepage, password
 
-load_dotenv(find_dotenv('.env'))
 
 app = Flask(__name__)
 
-register.configure(app)
-login.configure(app)
+auth.configure(app)
 homepage.configure(app)
 password.configure(app)
 

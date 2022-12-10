@@ -2,7 +2,6 @@ import mysql.connector
 import os
 import logging
 from dotenv import load_dotenv, find_dotenv
-
 load_dotenv(find_dotenv('.env'))
 
 
@@ -13,57 +12,66 @@ class ConnectionFactory:
         self.__user = os.getenv('USER')
         self.__password = os.getenv('PASSWORD')
         self.__database = os.getenv('DATABASE')
-        self.__mydb = mysql.connector.connect(host=os.getenv('HOST'), user=os.getenv('USER'),
-                                              password=os.getenv('PASSWORD'),
-                                              database=os.getenv('DATABASE'))
+        # self.__mydb = mysql.connector.connect(host=self.__host, user=self.__user, password=self.__password,
+        # database=self.__database)
 
     def connect(self):
         try:
-            return self.__mydb.cursor()
+            return mysql.connector.connect(host=self.__host, user=self.__user,
+                                           password=self.__password, database=self.__database)
         except Exception as e:
+            print(e)
             # logging.error(e)
             return False
 
     def insert(self, query, values):
         try:
-            cursor = self.connect()
+            mydb = self.connect()
+            cursor = mydb.cursor()
             cursor.execute(query, values)
-            cursor.connection.commit()
+            mydb.commit()
             cursor.close()
             return True
         except Exception as e:
+            print(e)
             # logging.error(e)
             return False
 
     def select(self, query, values):
         try:
-            cursor = self.connect()
+            mydb = self.connect()
+            cursor = mydb.cursor()
             cursor.execute(query, values)
             result = cursor.fetchall()
             cursor.close()
             return result
         except Exception as e:
+            print(e)
             # logging.error(e)
             return False
 
     def update(self, query, values):
         try:
-            cursor = self.connect()
+            mydb = self.connect()
+            cursor = mydb.cursor()
             cursor.execute(query, values)
-            cursor.connection.commit()
+            mydb.commit()
             cursor.close()
             return True
         except Exception as e:
+            print(e)
             # logging.error(e)
             return False
 
     def delete(self, query, values):
         try:
-            cursor = self.connect()
+            mydb = self.connect()
+            cursor = mydb.cursor()
             cursor.execute(query, values)
-            cursor.connection.commit()
+            mydb.commit()
             cursor.close()
             return True
         except Exception as e:
+            print(e)
             # logging.error(e)
             return False

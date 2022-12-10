@@ -1,12 +1,16 @@
 class User:
-    def __init__(self, name, email, password, tipo=0):
+    def __init__(self, name, email, password, user_type=0, user_id=None):
+        self.__id = user_id
         self.__name = name
         self.__email = email
         self.__password = password
-        self.__type = tipo
+        self.__type = user_type
 
     def __str__(self):
-        return f"User {self.__name} is {self.__type} years old"
+        return f"User: {self.__name} Email: {self.__email}"
+
+    def get_id(self):
+        return self.__id
 
     def get_name(self):
         return self.__name
@@ -19,6 +23,9 @@ class User:
 
     def get_type(self):
         return self.__type
+
+    def set_id(self, user_id):
+        self.__id = user_id
 
     def set_name(self, name):
         self.__name = name

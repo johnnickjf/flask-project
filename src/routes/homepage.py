@@ -5,7 +5,7 @@ bp = Blueprint('homepage', __name__, url_prefix='/')
 
 @bp.route('/', methods=['GET', 'POST'])
 def homepage():
-    return "homepage"
+    return render_template('index.html')
 
 
 def configure(app):
