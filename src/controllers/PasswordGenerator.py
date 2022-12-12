@@ -9,10 +9,10 @@ class PasswordGenerator:
         self.__data = data
 
     def create_str(self):
-        if self.__data.get('number'):
-            self.__num += self.__num
-        if self.__data.get('especial'):
-            self.__esp += self.__esp
+        if self.__data['number']:
+            self.__str += self.__num
+        if self.__data['esp']:
+            self.__str += self.__esp
 
     def password_generator(self):
         self.create_str()

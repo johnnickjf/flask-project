@@ -1,17 +1,15 @@
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import jwt_required
 from src.controllers.PasswordGenerator import PasswordGenerator
 
 bp = Blueprint('password', __name__, url_prefix='/api/password')
 
 
-@bp.route('/', methods=['POST', 'GET'])
+@bp.route('/', methods=['POST'])
+@jwt_required()
 def generate():
-    if request.method == 'POST':
-        password = PasswordGenerator(request.form)
-        return jsonify(password.password_generator())
-    else:
-        password = PasswordGenerator(request.args)
-        return jsonify(password.password_generator())
+    password = PasswordGenerator(request.json)
+    return jsonify(password.password_generator())
 
 
 def configure(app):

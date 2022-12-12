@@ -1,26 +1,38 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
+from datetime import timedelta
+from flask_jwt_extended import create_access_token, create_refresh_token
 from src.controllers.LoginController import LoginController
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
-@bp.route('/login', methods=['GET', 'POST'])
+# temporary file for testing
+@bp.route('/login')
+def login_html():
+    return render_template('login.html')
+
+
+@bp.route('/login', methods=['POST'])
 def login():
-    if request.method == 'GET':
-        return render_template('login.html')
-    valid = LoginController(request.form)
-    if valid.verify_credentials():
-        return jsonify({'token': valid.create_token()}), 200
-    return jsonify({'error': 'Invalid credentials'}), 401
+    data = LoginController(request.json)
+    if data.verify_credentials():
+        return jsonify({'access_token': create_access_token(data.get_user().get_id(), expires_delta=timedelta(days=7)),
+                        'refresh_token': create_refresh_token(data.get_user().get_id(), expires_delta=timedelta(days=7)),
+                        'status': 'success'}), 200
+    return jsonify({'status': 'Invalid credentials'}), 401
 
 
-@bp.route('/register', methods=['GET', 'POST'])
+# temporary file for testing
+@bp.route('/register', methods=['GET'])
+def register_html():
+    return render_template('register.html')
+
+
+@bp.route('/register', methods=['POST'])
 def register():
-    if request.method == 'GET':
-        return render_template('register.html')
-    if request.form.get('username') == '' or request.form.get('email') == '' or request.form.get('password') == '':
+    if request.json['username'] == '' or request.json['email'] == '' or request.json['password'] == '':
         return jsonify({'status': 'fill in all fields'}), 401
-    user = LoginController(request.form)
+    user = LoginController(request.json)
     return jsonify({'status': user.register()})
 
 

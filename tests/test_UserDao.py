@@ -17,13 +17,12 @@ def test_insert():
 def test_select():
     connection = ConnectionFactory()
     user = connection.select(''' SELECT * FROM user WHERE email = %s ''', ('email@gmail.com',))
-    print(user[0])
     assert connection.select(''' SELECT * FROM user WHERE email = %s ''', ('email@gmail.com',)) is not False
     
 
 def test_update():
     connection = ConnectionFactory()
-    assert connection.update(''' UPDATE user SET nome = %s WHERE email = %s ''',
+    assert connection.update(''' UPDATE user SET name = %s WHERE email = %s ''',
                              ('Joao', 'email@gmail.com')) is True
 
 

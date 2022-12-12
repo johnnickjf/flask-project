@@ -14,8 +14,6 @@ print(admin.get_email())
 print(admin.get_password())
 print(admin.get_type())
 
-
-
 password = str(input("input password: "))
 
 password = password.encode('utf-8')
