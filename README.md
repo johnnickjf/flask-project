@@ -7,7 +7,13 @@ This repository is for the purposes of studying.
 
 ## ⚙ Running the app
 
-flask run
+poetry install
+
+Terminal run: flask run
+
+AWS run: gunicorn app:app
+
+pip install -r requirements.txt
 
 # 👷 Authors
 
