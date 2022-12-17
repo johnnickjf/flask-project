@@ -2,6 +2,10 @@ from flask import Blueprint, request, jsonify, render_template
 from datetime import timedelta
 from flask_jwt_extended import create_access_token, create_refresh_token
 from src.controllers.LoginController import LoginController
+import os
+from dotenv import load_dotenv, find_dotenv
+
+load_dotenv(find_dotenv('.env'))
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -16,8 +20,9 @@ def login_html():
 def login():
     data = LoginController(request.json)
     if data.verify_credentials():
-        return jsonify({'access_token': create_access_token(data.get_user().get_id(), expires_delta=timedelta(days=7)),
-                        'refresh_token': create_refresh_token(data.get_user().get_id(), expires_delta=timedelta(days=7)),
+        return jsonify({'access_token': create_access_token(data.get_user().get_id(), expires_delta=timedelta(hours=1)),
+                        'refresh_token': create_refresh_token(data.get_user().get_id(),
+                                                              expires_delta=timedelta(days=7)),
                         'status': 'success'}), 200
     return jsonify({'status': 'Invalid credentials'}), 401
 
@@ -26,6 +31,11 @@ def login():
 @bp.route('/register', methods=['GET'])
 def register_html():
     return render_template('register.html')
+
+
+@bp.route('/env', methods=['GET'])
+def get_env():
+    return os.getenv('USER') + "<br>" + os.getenv('PASSWORD') + "<br>" + os.getenv('HOST') + "<br>" + os.getenv('DATABASE')
 
 
 @bp.route('/register', methods=['POST'])

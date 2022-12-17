@@ -8,7 +8,11 @@
       <jdbc-url>jdbc:mysql://localhost:3306/flask-project</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+<<<<<<< HEAD
     <data-source source="LOCAL" name="@flask-project.cauawt0yrihy.us-east-1.rds.amazonaws.com" uuid="31a9298a-7260-44b5-85ec-7db4f16464fb">
+=======
+    <data-source source="LOCAL" name="@flask-project.cauawt0yrihy.us-east-1.rds.amazonaws.com" uuid="56eab999-4ef9-4e7f-910a-e80f75dcc05b">
+>>>>>>> feat-jwt
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
