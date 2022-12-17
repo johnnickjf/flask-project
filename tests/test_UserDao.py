@@ -16,7 +16,7 @@ def test_insert():
 
 def test_select():
     connection = ConnectionFactory()
-    user = connection.select(''' SELECT * FROM user WHERE email = %s ''', ('email@gmail.com',))
+    connection.select(''' SELECT * FROM user WHERE email = %s ''', ('email@gmail.com',))
     assert connection.select(''' SELECT * FROM user WHERE email = %s ''', ('email@gmail.com',)) is not False
     
 

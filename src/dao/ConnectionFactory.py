@@ -1,6 +1,6 @@
-import mysql.connector
 import os
 import logging
+import mysql.connector
 from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv('.env'))
