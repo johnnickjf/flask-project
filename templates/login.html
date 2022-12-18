@@ -78,10 +78,10 @@
                 body: JSON.stringify(data),
             };
         
-            fetch("https://landim.xyz/auth/login", options)
+            fetch("http://127.0.0.1:5000/auth/login", options)
                 .then((res) => res.json())
                 .then((data) => {
-                console.log(data);
+                  window.alert(data.message);
                 });
         }
 

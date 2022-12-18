@@ -17,16 +17,18 @@ class LoginController:
                                    (self.__user['email'],))
         if result:
             if self.check_pw(self.__user['password'], result[0][3]):
-                self.__user = User(result[0][1], result[0][2], result[0][3], result[0][4], result[0][0])
-                return self.__user
+                self.__user = User({'user_id': result[0][0], 'username': result[0][1],
+                                    'email': result[0][2], 'password': result[0][3],
+                                    'user_type': result[0][4], 'created_at': result[0][5]})
+                return True
             return False
         return False
 
     def register(self):
-        self.__user = User(self.__user['username'], self.__user['email'], self.__user['password'])
-        query = ''' INSERT INTO user VALUES(NULL, %s, %s, %s, %s) '''
-        values = (self.__user.get_name(), self.__user.get_email(), self.encode_pw(self.__user.get_password()),
-                  self.__user.get_type())
+        user = User(self.__user)
+        query = ''' INSERT INTO user VALUES(NULL, %s, %s, %s, %s, %s) '''
+        values = (user.get_name(), user.get_email(), self.encode_pw(user.get_password()),
+                  user.get_type(), user.get_created_at())
         connection = ConnectionFactory()
         status = connection.insert(query, values)
         if status:

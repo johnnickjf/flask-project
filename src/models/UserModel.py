@@ -1,13 +1,18 @@
+import datetime
+
+
 class User:
-    def __init__(self, name, email, password, user_type=0, user_id=None):
-        self.__id = user_id
-        self.__name = name
-        self.__email = email
-        self.__password = password
-        self.__type = user_type
+    def __init__(self, data):
+        self.__id = data.get('user_id', None)
+        self.__name = data.get('username', None)
+        self.__email = data['email']
+        self.__password = data['password']
+        self.__type = data.get('user_type', 0)
+        self.__created_at = data.get('created_at', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
     def __str__(self):
-        return f"User: {self.__name} Email: {self.__email}"
+        return f"Id: {self.__id} Name: {self.__name} Email: {self.__email} Password: {self.__password} " \
+               f"Type: {self.__type} Created at: {self.__created_at}"
 
     def get_id(self):
         return self.__id
@@ -23,6 +28,9 @@ class User:
 
     def get_type(self):
         return self.__type
+
+    def get_created_at(self):
+        return self.__created_at
 
     def set_id(self, user_id):
         self.__id = user_id
