@@ -103,7 +103,7 @@
                 body: JSON.stringify(data),
             };
 
-            fetch("http://127.0.0.1:5000/auth/register", options)
+            fetch("https://landim.xyz/auth/register", options)
                 .then((res) => res.json())
                 .then((data) => {
                   window.alert(data.message);
