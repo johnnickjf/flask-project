@@ -9,18 +9,18 @@ load_dotenv(find_dotenv('.env'))
 class ConnectionFactory:
 
     def __init__(self):
-        self.__host = os.getenv('HOST')
-        self.__user = os.getenv('USER')
-        self.__password = os.getenv('PASSWORD')
-        self.__database = os.getenv('DATABASE')
-        self.__mydb = mysql.connector.connect(host=self.__host, user=self.__user, password=self.__password,
-                                              database=self.__database)
+        self.host = os.getenv('HOST')
+        self.user = os.getenv('USER')
+        self.password = os.getenv('PASSWORD')
+        self.database = os.getenv('DATABASE')
+        self.mydb = mysql.connector.connect(host=self.host, user=self.user, password=self.password,
+                                            database=self.database)
 
-    def insert(self, query, values):
+    def insert(self, data):
         try:
-            cursor = self.__mydb.cursor()
-            cursor.execute(query, values)
-            self.__mydb.commit()
+            cursor = self.mydb.cursor()
+            cursor.execute(data['query'], data['values'])
+            self.mydb.commit()
             cursor.close()
             return True
         except Exception as e:
@@ -28,10 +28,10 @@ class ConnectionFactory:
             # logging.error(e)
             return False
 
-    def select(self, query, values):
+    def select(self, data):
         try:
-            cursor = self.__mydb.cursor()
-            cursor.execute(query, values)
+            cursor = self.mydb.cursor()
+            cursor.execute(data['query'], data['values'])
             result = cursor.fetchall()
             cursor.close()
             return result
@@ -40,11 +40,11 @@ class ConnectionFactory:
             # logging.error(e)
             return False
 
-    def update(self, query, values):
+    def update(self, data):
         try:
-            cursor = self.__mydb.cursor()
-            cursor.execute(query, values)
-            self.__mydb.commit()
+            cursor = self.mydb.cursor()
+            cursor.execute(data['query'], data['values'])
+            self.mydb.commit()
             cursor.close()
             return True
         except Exception as e:
@@ -52,11 +52,11 @@ class ConnectionFactory:
             # logging.error(e)
             return False
 
-    def delete(self, query, values):
+    def delete(self, data):
         try:
-            cursor = self.__mydb.cursor()
-            cursor.execute(query, values)
-            self.__mydb.commit()
+            cursor = self.mydb.cursor()
+            cursor.execute(data['query'], data['values'])
+            self.mydb.commit()
             cursor.close()
             return True
         except Exception as e:

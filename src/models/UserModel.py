@@ -5,7 +5,7 @@ class User:
     def __init__(self, data):
         self.__id = data.get('id', None)
         self.__name = data.get('username', None)
-        self.__email = data['email']
+        self.__email = data.get('email', None)
         self.__password = data.get('password', None)
         self.__type = data.get('user_type', 0)
         self.__created_at = data.get('created_at', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
