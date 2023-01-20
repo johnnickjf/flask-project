@@ -4,46 +4,43 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../static/styles.css" />
+    <link rel="stylesheet" href="../static/homepage.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap"
       rel="stylesheet"
     />
-    <title>Login</title>
+    <title>homepage</title>
   </head>
   <body>
     <div class="container">
       <div class="header">
-        <h2>Faça seu Login</h2>
+        <h2>Bem vindo! {{ user }}</h2>
       </div>
-
-      <form id="form" class="form" method="post">
-
-        <div class="form-control">
-          <label for="email">Email</label>
-          <input type="text" id="email" placeholder="Digite seu email.." />
-          <i class="fas fa-exclamation-circle"></i>
-          <i class="fas fa-check-circle"></i>
-          <small>Mensagem de erro</small>
+        <div class="table-header">
+            <table id="user-table">
+              <tr>
+                  <div class="th-margin">
+                      <th>ID</th>
+                  </div>
+                <div class="th-margin">
+                      <th>Nome</th>
+                  </div>
+                  <div class="th-margin">
+                      <th>Email</th>
+                  </div>
+                  <div class="th-margin">
+                      <th>Create_AT</th>
+                  </div>
+              </tr>
+            </table>
         </div>
-
-        <div class="form-control">
-          <label for="password">Senha</label>
-          <input
-            type="password"
-            id="password"
-            placeholder="Digite sua senha..."
-          />
-          <i class="fas fa-exclamation-circle"></i>
-          <i class="fas fa-check-circle"></i>
-          <small>Mensagem de erro</small>
+        <div class="btn-flex">
+            <div class="link-edit"><a href="/edit"> <button class="btn" id="btn">Editar informações</button> </a></div>
         </div>
-
-        <button type="submit">Enviar</button>
-      </form>
     </div>
+
 
     <script
       src="https://kit.fontawesome.com/f9e19193d6.js"
@@ -51,94 +48,38 @@
     ></script>
 
     <script>
-        const form = document.getElementById("form");
-        const email = document.getElementById("email");
-        const password = document.getElementById("password");
-
-        console.log("O script está funcionando!");
-
-        form.addEventListener("submit", (e) => {
-          e.preventDefault();
-          if(checkInputs()){
-            send_data();
-          }
-        });
-
-        function send_data() {
-            const data = {
-                email: email.value,
-                password: password.value,
-            };
-
-            const options = {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data),
-            };
-
-            fetch("http://127.0.0.1:5000/auth/login", options)
-                .then((res) => res.json())
-                .then((data) => {
-                  window.alert(data.message);
-                });
+        const token = localStorage.getItem("authToken");
+        console.log(token);
+        if (!token) {
+            window.location.href = "/auth/login";
         }
 
-        function checkInputs() {
-          const emailValue = email.value;
-          const passwordValue = password.value;
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + token);
 
-          if (emailValue === "") {
-            setErrorFor(email, "O email é obrigatório.");
-          } else if (!checkEmail(emailValue)) {
-            setErrorFor(email, "Por favor, insira um email válido.");
-          } else {
-            setSuccessFor(email);
-          }
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders,
+          redirect: 'follow'
+        };
 
-          if (passwordValue === "") {
-            setErrorFor(password, "A senha é obrigatória.");
-          } else if (passwordValue.length < 7) {
-            setErrorFor(password, "A senha precisa ter no mínimo 7 caracteres.");
-          } else {
-            setSuccessFor(password);
-          }
-          const formControls = form.querySelectorAll(".form-control");
+        fetch("http://127.0.0.1:5000/homepage/api", requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            console.log(result);
+            const user = JSON.parse(result);
+            const table = document.getElementById("user-table");
+            const row = table.insertRow();
+            const idCell = row.insertCell();
+            const nameCell = row.insertCell();
+            const emailCell = row.insertCell();
+            const createCell = row.insertCell();
+            idCell.innerHTML = user.id;
+            nameCell.innerHTML = user.name;
+            emailCell.innerHTML = user.email;
+            createCell.innerHTML = user.create_at;
+          })
 
-          const formIsValid = [...formControls].every((formControl) => {
-            return formControl.className === "form-control success";
-          });
-
-          if (formIsValid) {
-            console.log("O formulário está 100% válido!");
-            return true;
-          }
-        }
-
-        function setErrorFor(input, message) {
-          const formControl = input.parentElement;
-          const small = formControl.querySelector("small");
-
-          // Adiciona a mensagem de erro
-          small.innerText = message;
-
-          // Adiciona a classe de erro
-          formControl.className = "form-control error";
-        }
-
-        function setSuccessFor(input) {
-          const formControl = input.parentElement;
-
-          // Adicionar a classe de sucesso
-          formControl.className = "form-control success";
-        }
-
-        function checkEmail(email) {
-          return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-            email
-          );
-        }
     </script>
   </body>
 </html>

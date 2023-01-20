@@ -1,4 +1,4 @@
-# AUTO_TEST_V3
+# FLASK-PROJECT-AUTH
 []: # Version: 0.1.0
 
 # 📝 Description
@@ -9,9 +9,9 @@ This repository is for the purposes of studying.
 
 poetry install
 
-Terminal run: flask run
+Run: flask run
 
-AWS run: gunicorn app:app
+AWS Run: gunicorn app:app
 
 pip install -r requirements.txt
 

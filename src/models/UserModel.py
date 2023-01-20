@@ -3,10 +3,10 @@ import datetime
 
 class User:
     def __init__(self, data):
-        self.__id = data.get('user_id', None)
+        self.__id = data.get('id', None)
         self.__name = data.get('username', None)
         self.__email = data['email']
-        self.__password = data['password']
+        self.__password = data.get('password', None)
         self.__type = data.get('user_type', 0)
         self.__created_at = data.get('created_at', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 

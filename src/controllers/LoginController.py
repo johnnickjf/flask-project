@@ -17,7 +17,7 @@ class LoginController:
                                    (self.__user['email'],))
         if result:
             if self.check_pw(self.__user['password'], result[0][3]):
-                self.__user = User({'user_id': result[0][0], 'username': result[0][1],
+                self.__user = User({'id': result[0][0], 'username': result[0][1],
                                     'email': result[0][2], 'password': result[0][3],
                                     'user_type': result[0][4], 'created_at': result[0][5]})
                 return True

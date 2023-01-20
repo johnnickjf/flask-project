@@ -24,8 +24,8 @@ def register_html():
 def login():
     data = LoginController(request.json)
     if data.verify_credentials():
-        return jsonify({'access_token': create_access_token(identity=data.get_user().get_id()),
-                        'refresh_token': create_refresh_token(identity=data.get_user().get_id()),
+        return jsonify({'authToken': create_access_token(identity=data.get_user().get_id()),
+                        'refreshToken': create_refresh_token(identity=data.get_user().get_id()),
                         'message': 'Valid credentials'}), 200
     return jsonify({'message': 'Invalid credentials'}), 401
 
@@ -34,7 +34,7 @@ def login():
 @jwt_required(refresh=True)
 def refresh():
     identity = get_jwt_identity()
-    return jsonify({'access_token': create_access_token(identity=identity)}), 200
+    return jsonify({'authToken': create_access_token(identity=identity)}), 200
 
 
 @bp.route('/register', methods=['POST'])
