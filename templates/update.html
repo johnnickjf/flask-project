@@ -111,12 +111,12 @@
                 body: JSON.stringify(data),
             };
 
-            fetch("https://landim.xyz/profile/edit", options)
+            fetch("/profile/edit", options)
                 .then((res) => res.json())
                 .then((data) => {
                   window.alert(data.message);
                   localStorage.clear();
-                  window.location.href = "https://landim.xyz/auth/login";
+                  window.location.href = "/auth/login";
                 });
         }
 
