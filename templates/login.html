@@ -78,7 +78,7 @@
                 body: JSON.stringify(data),
             };
 
-            fetch("http://127.0.0.1:5000/auth/login", options)
+            fetch("https://landim.xyz/auth/login", options)
                 .then((res) => res.json())
                 .then((data) => {
                   window.alert(data.message);
@@ -87,7 +87,7 @@
                     console.log(data);
                     localStorage.setItem('authToken', data.authToken);
                     localStorage.setItem('refreshToken', data.refreshToken);
-                    window.location.href = "http://127.0.0.1:5000/profile";
+                    window.location.href = "https://landim.xyz/profile";
                   }
                 });
         }

@@ -52,7 +52,7 @@
         btn.addEventListener("click", edit);
         function edit() {
             event.preventDefault();
-            window.location.href = "http://127.0.0.1:5000/profile/edit";
+            window.location.href = "https://landim.xyz/profile/edit";
         }
 
         const token = localStorage.getItem("authToken");
@@ -70,7 +70,7 @@
           redirect: 'follow'
         };
 
-        fetch("http://127.0.0.1:5000/profile/api", requestOptions)
+        fetch("https://landim.xyz/profile/api", requestOptions)
           .then(response => response.text())
           .then(result => {
             console.log(result);

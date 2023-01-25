@@ -111,12 +111,12 @@
                 body: JSON.stringify(data),
             };
 
-            fetch("http://127.0.0.1:5000/profile/edit", options)
+            fetch("https://landim.xyz/profile/edit", options)
                 .then((res) => res.json())
                 .then((data) => {
                   window.alert(data.message);
                   localStorage.clear();
-                  window.location.href = "http://127.0.0.1:5000/auth/login";
+                  window.location.href = "https://landim.xyz/auth/login";
                 });
         }
 
