@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from flask_jwt_extended import JWTManager
-from src.routes import auth, homepage, password
+from src.routes import auth, profile, password
 from dotenv import load_dotenv, find_dotenv
 from datetime import timedelta
 import os
@@ -13,7 +13,7 @@ app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY')
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.config["JWT_REFRESH_TOKEN_EXPIRES"] = timedelta(days=30)
 auth.configure(app)
-homepage.configure(app)
+profile.configure(app)
 password.configure(app)
 
 

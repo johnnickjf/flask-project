@@ -37,7 +37,7 @@
             </table>
         </div>
         <div class="btn-flex">
-            <div class="link-edit"><a href="/edit"> <button class="btn" id="btn">Editar informações</button> </a></div>
+            <div class="link-edit"><button class="btn" id="btn">Editar informações</button></div>
         </div>
     </div>
 
@@ -48,6 +48,13 @@
     ></script>
 
     <script>
+        const btn = document.getElementById("btn");
+        btn.addEventListener("click", edit);
+        function edit() {
+            event.preventDefault();
+            window.location.href = "http://127.0.0.1:5000/profile/edit";
+        }
+
         const token = localStorage.getItem("authToken");
         console.log(token);
         if (!token) {
@@ -63,7 +70,7 @@
           redirect: 'follow'
         };
 
-        fetch("http://127.0.0.1:5000/homepage/api", requestOptions)
+        fetch("http://127.0.0.1:5000/profile/api", requestOptions)
           .then(response => response.text())
           .then(result => {
             console.log(result);

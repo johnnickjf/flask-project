@@ -11,15 +11,26 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;900&display=swap"
       rel="stylesheet"
     />
-    <title>Login</title>
+    <title>Edit</title>
   </head>
   <body>
     <div class="container">
       <div class="header">
-        <h2>Faça seu Login</h2>
+        <h2>Edite seus dados</h2>
       </div>
 
       <form id="form" class="form" method="post">
+        <div class="form-control">
+          <label for="username">Nome</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Digite seu nome de usuário..."
+          />
+          <i class="fas fa-exclamation-circle"></i>
+          <i class="fas fa-check-circle"></i>
+          <small>Mensagem de erro</small>
+        </div>
 
         <div class="form-control">
           <label for="email">Email</label>
@@ -41,6 +52,18 @@
           <small>Mensagem de erro</small>
         </div>
 
+        <div class="form-control">
+          <label for="password-confirmation">Confirmação de senha</label>
+          <input
+            type="password"
+            id="password-confirmation"
+            placeholder="Digite sua senha novamente..."
+          />
+          <i class="fas fa-exclamation-circle"></i>
+          <i class="fas fa-check-circle"></i>
+          <small>Mensagem de erro</small>
+        </div>
+        <h5>Preencha todos os dados!</h5>
         <button type="submit">Enviar</button>
       </form>
     </div>
@@ -51,21 +74,30 @@
     ></script>
 
     <script>
+
         const form = document.getElementById("form");
+        const username = document.getElementById("username");
         const email = document.getElementById("email");
         const password = document.getElementById("password");
+        const passwordConfirmation = document.getElementById("password-confirmation");
 
-        console.log("O script está funcionando!");
+
+        const token = localStorage.getItem("authToken");
+        console.log(token);
+        if (!token) {
+            window.location.href = "/auth/login";
+        }
 
         form.addEventListener("submit", (e) => {
           e.preventDefault();
           if(checkInputs()){
-            const r = send_data();
+            send_data();
           }
         });
 
         function send_data() {
             const data = {
+                username: username.value,
                 email: email.value,
                 password: password.value,
             };
@@ -73,28 +105,32 @@
             const options = {
                 method: "POST",
                 headers: {
-                "Content-Type": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
                 },
                 body: JSON.stringify(data),
             };
 
-            fetch("http://127.0.0.1:5000/auth/login", options)
+            fetch("http://127.0.0.1:5000/profile/edit", options)
                 .then((res) => res.json())
                 .then((data) => {
                   window.alert(data.message);
-                  if(data.authToken){
-                    console.log("Login realizado com sucesso!");
-                    console.log(data);
-                    localStorage.setItem('authToken', data.authToken);
-                    localStorage.setItem('refreshToken', data.refreshToken);
-                    window.location.href = "http://127.0.0.1:5000/profile";
-                  }
+                  localStorage.clear();
+                  window.location.href = "http://127.0.0.1:5000/auth/login";
                 });
         }
 
         function checkInputs() {
+          const usernameValue = username.value;
           const emailValue = email.value;
           const passwordValue = password.value;
+          const passwordConfirmationValue = passwordConfirmation.value;
+
+          if (usernameValue === "") {
+            setErrorFor(username, "O nome de usuário é obrigatório.");
+          } else {
+            setSuccessFor(username);
+          }
 
           if (emailValue === "") {
             setErrorFor(email, "O email é obrigatório.");
@@ -111,6 +147,15 @@
           } else {
             setSuccessFor(password);
           }
+
+          if (passwordConfirmationValue === "") {
+            setErrorFor(passwordConfirmation, "A confirmação de senha é obrigatória.");
+          } else if (passwordConfirmationValue !== passwordValue) {
+            setErrorFor(passwordConfirmation, "As senhas não conferem.");
+          } else {
+            setSuccessFor(passwordConfirmation);
+          }
+
           const formControls = form.querySelectorAll(".form-control");
 
           const formIsValid = [...formControls].every((formControl) => {

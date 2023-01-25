@@ -5,7 +5,7 @@ import bcrypt
 
 class LoginController:
 
-    def __init__(self, data):
+    def __init__(self, data=None):
         self.__user = None
         self.__data = data
 
