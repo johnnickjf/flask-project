@@ -1,5 +1,5 @@
 # FLASK-PROJECT-AUTH
-[]: # Version: 0.1.0
+# Version: 0.1.8
 
 # 📝 Description
 
