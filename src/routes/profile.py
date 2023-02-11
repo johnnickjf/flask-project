@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, render_template
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-from src.controllers.UserController import UserController
+from src.controllers.user_controller import UserController
 
 bp = Blueprint('profile', __name__, url_prefix='/profile')
 
@@ -21,8 +21,8 @@ def update_user_html():
 def homepage():
     identity = get_jwt_identity()
     user = UserController().get_user_by_id(identity)
-    return jsonify({'message': 'Welcome to the homepage', 'id': user.get_id(), 'name': user.get_name(),
-                    'email': user.get_email(), 'create_at': user.get_created_at()}), 200
+    return jsonify({'message': 'Welcome to the homepage', 'id': user.id, 'name': user.name,
+                    'email': user.email, 'create_at': user.created_at}), 200
 
 
 @bp.route('/edit', methods=['POST'])

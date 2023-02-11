@@ -3,7 +3,7 @@ from flask_jwt_extended import create_refresh_token
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
-from src.controllers.LoginController import LoginController
+from src.controllers.login_controller import LoginController
 
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -24,8 +24,8 @@ def register_html():
 def login():
     data = LoginController(request.json)
     if data.verify_credentials():
-        return jsonify({'authToken': create_access_token(identity=data.get_user().get_id()),
-                        'refreshToken': create_refresh_token(identity=data.get_user().get_id()),
+        return jsonify({'authToken': create_access_token(identity=data.get_user().id),
+                        'refreshToken': create_refresh_token(identity=data.get_user().id),
                         'message': 'Valid credentials'}), 200
     return jsonify({'message': 'Invalid credentials'}), 401
 

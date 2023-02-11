@@ -1,6 +1,6 @@
-from src.dao.UserDao import UserDao
-from src.models.UserModel import User
-from src.controllers.LoginController import LoginController
+from src.dao.user_dao import UserDao
+from src.models.user import User
+from src.controllers.login_controller import hash_pw
 
 
 class UserController:
@@ -17,7 +17,7 @@ class UserController:
 
     def update_user_by_id(self, data):
         dao = UserDao()
-        data['password'] = LoginController().hash_pw(data['password'])
+        data['password'] = hash_pw(data['password'])
         self.__user = User(data)
         status = dao.update(self.__user)
         if status:

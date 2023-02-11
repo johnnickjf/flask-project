@@ -1,11 +1,11 @@
-from src.dao.UserDao import UserDao
-from src.models.UserModel import User
-from src.dao.ConnectionFactory import ConnectionFactory
+from src.dao.user_dao import UserDao
+from src.models.user import User
+from src.dao.connection_factory import ConnectionFactory
 
 
 def test_insert_user():
     user = User({'username': 'test', 'email': 'testando@gmail.com', 'password': 'pass'})
-    assert user.get_name() == 'test'
+    assert user.name == 'test'
 
 
 def test_insert():

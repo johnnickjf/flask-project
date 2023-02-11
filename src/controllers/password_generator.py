@@ -16,5 +16,5 @@ class PasswordGenerator:
 
     def password_generator(self):
         self.create_str()
-        password = {'password': ''.join(random.sample(self.__str, int(self.__data['length'])))}
+        password = ''.join(random.sample(self.__str, int(self.__data['length'])))
         return password

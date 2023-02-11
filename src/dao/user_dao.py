@@ -1,5 +1,5 @@
-from src.dao.ConnectionFactory import ConnectionFactory
-from src.models.UserModel import User
+from src.dao.connection_factory import ConnectionFactory
+from src.models.user import User
 
 
 class UserDao(ConnectionFactory):
@@ -11,8 +11,8 @@ class UserDao(ConnectionFactory):
         try:
             cursor = self.mydb.cursor()
             cursor.execute(''' INSERT INTO user VALUES(NULL, %s, %s, %s, %s, %s) ''',
-                           (user.get_name(), user.get_email(), user.get_password(),
-                            user.get_type(), user.get_created_at()))
+                           (user.name, user.email, user.password,
+                            user.type, user.created_at))
             self.mydb.commit()
             cursor.close()
             return True
@@ -27,7 +27,7 @@ class UserDao(ConnectionFactory):
             cursor.execute(''' SELECT * FROM user WHERE id = %s ''', (user_id,))
             result = cursor.fetchall()
             cursor.close()
-            return self.create_user(result)
+            return create_user(result)
         except Exception as e:
             print(e)
             # logging.error(e)
@@ -39,7 +39,7 @@ class UserDao(ConnectionFactory):
             cursor.execute(''' SELECT * FROM user WHERE email = %s ''', (email,))
             result = cursor.fetchall()
             cursor.close()
-            return self.create_user(result)
+            return create_user(result)
         except Exception as e:
             print(e)
             # logging.error(e)
@@ -49,7 +49,7 @@ class UserDao(ConnectionFactory):
         try:
             cursor = self.mydb.cursor()
             cursor.execute(''' UPDATE user SET name = %s, email = %s, password = %s WHERE id = %s ''',
-                           (user.get_name(), user.get_email(), user.get_password(), user.get_id()))
+                           (user.name, user.email, user.password, user.id))
             self.mydb.commit()
             cursor.close()
             return True
@@ -82,8 +82,8 @@ class UserDao(ConnectionFactory):
             # logging.error(e)
             return False
 
-    @staticmethod
-    def create_user(result):
-        return User({'id': result[0][0], 'username': result[0][1],
-                     'email': result[0][2], 'password': result[0][3],
-                     'user_type': result[0][4], 'created_at': result[0][5]})
+
+def create_user(result):
+    return User({'id': result[0][0], 'username': result[0][1],
+                 'email': result[0][2], 'password': result[0][3],
+                 'user_type': result[0][4], 'created_at': result[0][5]})
