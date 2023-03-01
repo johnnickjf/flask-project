@@ -1,5 +1,5 @@
 # FLASK-PROJECT-AUTH
-# Version: 0.1.8
+###### version 1.8.2
 
 https://flask-project.onrender.com/
 
